@@ -7,6 +7,7 @@ import com.hescha.game.util.LoadedTextures;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class SaperService {
 
@@ -70,6 +71,48 @@ public class SaperService {
                     }
                 }
             }
+        }
+    }
+
+    public static void flagSelectedCell(Saper game) {
+        SaperCell saperCell = game.findSelectedCell();
+        if (saperCell != null && !saperCell.isOpened()) {
+            if (saperCell.isFlagged()) {
+                saperCell.setFlagged(false);
+                game.plusFlag();
+            } else if (game.getFlagsLeft() > 0) {
+                saperCell.setFlagged(true);
+                game.minusFlag();
+            }
+            saperCell.setQuestion(false);
+        }
+    }
+
+    public static void questSelectedCell(Saper game) {
+        SaperCell saperCell = game.findSelectedCell();
+        if (saperCell != null && !saperCell.isOpened()) {
+            if (saperCell.isFlagged()) {
+                saperCell.setFlagged(false);
+                game.plusFlag();
+            }
+            if (saperCell.isQuestion()) {
+                saperCell.setQuestion(false);
+            } else {
+                saperCell.setQuestion(true);
+            }
+
+        }
+    }
+
+    public static void openSelectedCell(Saper game) {
+        SaperCell saperCell = game.findSelectedCell();
+        if (saperCell != null && !saperCell.isOpened()) {
+            if (saperCell.isFlagged()) {
+                saperCell.setFlagged(false);
+                game.plusFlag();
+            }
+            saperCell.setQuestion(false);
+            saperCell.setOpened(true);
         }
     }
 }

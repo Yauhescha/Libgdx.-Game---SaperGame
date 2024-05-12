@@ -9,10 +9,12 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.hescha.game.model.Saper;
@@ -40,7 +42,7 @@ public class GameScreen extends ScreenAdapter {
         batch = new SpriteBatch();
 
 
-        int linesX = 7;
+        int linesX = 8;
         int linesY = 10;
         int mines = 5;
         game = SaperService.createGame(linesX, linesY, mines);
@@ -54,8 +56,8 @@ public class GameScreen extends ScreenAdapter {
                 sellsGroup.addActor(saperCell);
             }
         }
-        if(sellsGroup.getWidth()<WORLD_WIDTH){
-            sellsGroup.setX((WORLD_WIDTH-TILE_SIZE*linesX)/2);
+        if (sellsGroup.getWidth() < WORLD_WIDTH) {
+            sellsGroup.setX((WORLD_WIDTH - TILE_SIZE * linesX) / 2);
         }
         stage.addActor(sellsGroup);
 
@@ -66,12 +68,33 @@ public class GameScreen extends ScreenAdapter {
 
         TextButton flagButton = new TextButton("Flag", skin);
         flagButton.setBounds(0, 0, WORLD_WIDTH / 3, TILE_SIZE * 2);
+        flagButton.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                SaperService.flagSelectedCell(game);
+                return true;
+            }
+        });
 
         TextButton questButton = new TextButton("Quest", skin);
         questButton.setBounds(WORLD_WIDTH / 3, 0, WORLD_WIDTH / 3, TILE_SIZE * 2);
+        questButton.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                SaperService.questSelectedCell(game);
+                return true;
+            }
+        });
 
         TextButton openButton = new TextButton("Open", skin);
         openButton.setBounds((WORLD_WIDTH / 3) * 2, 0, WORLD_WIDTH / 3, TILE_SIZE * 2);
+        openButton.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                SaperService.openSelectedCell(game);
+                return true;
+            }
+        });
 
         buttonGroup.addActor(flagButton);
         buttonGroup.addActor(questButton);
