@@ -2,6 +2,7 @@ package com.hescha.game.service;
 
 import com.hescha.game.model.Saper;
 import com.hescha.game.model.SaperCell;
+import com.hescha.game.util.LoadedTextures;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +15,8 @@ public class SaperService {
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 cells[i][j] = new SaperCell();
+                cells[i][j].setX(i * LoadedTextures.TILE_SIZE);
+                cells[i][j].setY(j * LoadedTextures.TILE_SIZE);
             }
         }
 
