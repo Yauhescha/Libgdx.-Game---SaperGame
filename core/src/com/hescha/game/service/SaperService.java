@@ -11,22 +11,24 @@ import java.util.List;
 public class SaperService {
 
     public static Saper createGame(int linesX, int linesY, int mines) {
+        Saper saper = new Saper();
+        saper.setLinesX(linesX);
+        saper.setLinesY(linesY);
+        saper.setMines(mines);
+        saper.setFlagsLeft(mines);
+
         SaperCell[][] cells = new SaperCell[linesX][linesY];
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 cells[i][j] = new SaperCell();
                 cells[i][j].setX(i * LoadedTextures.TILE_SIZE);
                 cells[i][j].setY(j * LoadedTextures.TILE_SIZE);
+                cells[i][j].setGame(saper);
             }
         }
 
         shuffleCells(cells, mines);
 
-        Saper saper = new Saper();
-        saper.setLinesX(linesX);
-        saper.setLinesY(linesY);
-        saper.setMines(mines);
-        saper.setFlagsLeft(mines);
         saper.setCells(cells);
         return saper;
     }
